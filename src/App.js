@@ -18,6 +18,7 @@ import { StakingProvider } from './context/StakingContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TransactionHistory from './components/TransactionHistory/TransactionHistory';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 // Import wallet adapter CSS
 import '@solana/wallet-adapter-react-ui/styles.css';
@@ -37,26 +38,28 @@ function App() {
   );
 
   return (
-    <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
-        <WalletModalProvider>
-          <StakingProvider>
-            <div className="App">
-              <header className="App-header">
-                <h1>NFT Staking Platform</h1>
-                <WalletConnect />
-              </header>
-              <main className="App-main">
-                <AdminPanel />
-                <NFTGallery />
-                <TransactionHistory />
-              </main>
-            </div>
-            <ToastContainer />
-          </StakingProvider>
-        </WalletModalProvider>
-      </WalletProvider>
-    </ConnectionProvider>
+    <ErrorBoundary>
+      <ConnectionProvider endpoint={endpoint}>
+        <WalletProvider wallets={wallets} autoConnect>
+          <WalletModalProvider>
+            <StakingProvider>
+              <div className="App">
+                <header className="App-header">
+                  <h1>NFT Staking Platform</h1>
+                  <WalletConnect />
+                </header>
+                <main className="App-main">
+                  <AdminPanel />
+                  <NFTGallery />
+                  <TransactionHistory />
+                </main>
+              </div>
+              <ToastContainer />
+            </StakingProvider>
+          </WalletModalProvider>
+        </WalletProvider>
+      </ConnectionProvider>
+    </ErrorBoundary>
   );
 }
 

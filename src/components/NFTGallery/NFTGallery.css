@@ -75,4 +75,57 @@
 .stake-button:disabled {
   background: #cccccc;
   cursor: not-allowed;
+}
+
+.nft-loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-left-color: #4CAF50;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.nft-error {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(244, 67, 54, 0.1);
+  border-radius: 12px;
+}
+
+.nft-message,
+.no-nfts-message {
+  text-align: center;
+  padding: 2rem;
+}
+
+.nft-submessage {
+  display: block;
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.retry-button {
+  padding: 0.8rem 2rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.retry-button:hover {
+  background: #45a049;
 } 
