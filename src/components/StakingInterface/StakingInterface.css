@@ -1,0 +1,50 @@
+.staking-interface {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.staking-info {
+  margin-bottom: 1.5rem;
+}
+
+.staking-info h3 {
+  margin: 0 0 1rem 0;
+}
+
+.staking-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.stake-button,
+.unstake-button {
+  flex: 1;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.stake-button {
+  background: #4CAF50;
+  color: white;
+}
+
+.unstake-button {
+  background: #f44336;
+  color: white;
+}
+
+.stake-button:hover:not(:disabled),
+.unstake-button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.stake-button:disabled,
+.unstake-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+} 

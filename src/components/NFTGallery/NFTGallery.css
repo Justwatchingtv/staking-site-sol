@@ -1,0 +1,78 @@
+.nft-gallery-container {
+  padding: 2rem;
+}
+
+.nft-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.nft-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.nft-card:hover {
+  transform: translateY(-5px);
+}
+
+.nft-card.staked {
+  border: 2px solid #4CAF50;
+}
+
+.nft-image-container {
+  width: 100%;
+  padding-bottom: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.nft-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nft-info {
+  padding: 1rem 0;
+}
+
+.nft-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.nft-status {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.stake-button {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.stake-button:hover:not(:disabled) {
+  background: #45a049;
+}
+
+.stake-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+} 

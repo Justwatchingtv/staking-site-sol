@@ -1,0 +1,119 @@
+.admin-panel {
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+}
+
+.settings-section,
+.treasury-section {
+  margin-bottom: 2rem;
+}
+
+.setting-item {
+  margin-bottom: 1rem;
+}
+
+.setting-item label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.setting-item input,
+.setting-item select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tiers-section {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+.tier-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.tier-item input {
+  flex: 1;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.action-buttons button:first-child {
+  background: #4CAF50;
+  color: white;
+}
+
+.action-buttons button:last-child {
+  background: #f44336;
+  color: white;
+}
+
+.treasury-section button {
+  padding: 0.8rem 1.5rem;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:disabled {
+  background: #cccccc !important;
+  cursor: not-allowed;
+}
+
+.current-settings {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.current-settings p {
+  margin: 0.5rem 0;
+}
+
+.treasury-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.treasury-input {
+  display: flex;
+  gap: 1rem;
+}
+
+.treasury-input input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.treasury-input button {
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
+} 
