@@ -16,6 +16,7 @@ import {
   withdrawRewardTokens,
   getTreasuryBalance
 } from '../../utils/treasuryManager';
+import { validatePublicKey, validateAmount, validateRewardRate, validateMaxStaked, validateTier } from '../../utils/validation';
 import './AdminPanel.css';
 
 const AdminPanel = () => {
@@ -35,6 +36,7 @@ const AdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [addTokenAmount, setAddTokenAmount] = useState('');
   const [withdrawAmount, setWithdrawAmount] = useState('');
+  const [validationErrors, setValidationErrors] = useState({});
 
   useEffect(() => {
     if (publicKey) {
@@ -54,7 +56,36 @@ const AdminPanel = () => {
     setSettings(prev => ({ ...prev, treasuryBalance: balance }));
   };
 
+  const validateSettings = () => {
+    const errors = {};
+
+    if (!settings.rewardToken || !validatePublicKey(settings.rewardToken)) {
+      errors.rewardToken = 'Invalid reward token address';
+    }
+
+    if (!validateRewardRate(settings.baseRewardRate)) {
+      errors.baseRewardRate = 'Invalid reward rate';
+    }
+
+    if (!validateMaxStaked(settings.maxStaked)) {
+      errors.maxStaked = 'Invalid maximum staked amount';
+    }
+
+    if (settings.rewardType === REWARD_TYPES.TIERED) {
+      const invalidTiers = settings.tiers.some(tier => !validateTier(tier));
+      if (invalidTiers) {
+        errors.tiers = 'Invalid tier configuration';
+      }
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSaveSettings = async () => {
+    if (!validateSettings()) {
+      return;
+    }
     setIsLoading(true);
     try {
       // TODO: Add transaction to update program settings
@@ -159,7 +190,11 @@ const AdminPanel = () => {
                   ...prev, 
                   rewardToken: e.target.value 
                 }))}
+                className={validationErrors.rewardToken ? 'error' : ''}
               />
+              {validationErrors.rewardToken && (
+                <span className="error-message">{validationErrors.rewardToken}</span>
+              )}
             </div>
 
             <div className="setting-item">

@@ -7,6 +7,7 @@ import {
 } from '@solana/web3.js';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { UNSTAKE_FEE } from '../../utils/constants';
+import { verifyTransactionSafety, verifyTransactionFees } from '../../utils/transactionChecks';
 import './StakingInterface.css';
 
 const StakingInterface = ({ nft, onStakeChange }) => {
@@ -15,10 +16,12 @@ const StakingInterface = ({ nft, onStakeChange }) => {
   const [rewardRate, setRewardRate] = useState(0);
   const [rewardToken, setRewardToken] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleStake = async () => {
     if (!publicKey) return;
     setIsProcessing(true);
+    setError(null);
 
     try {
       // Create staking transaction
@@ -27,13 +30,20 @@ const StakingInterface = ({ nft, onStakeChange }) => {
       // Add NFT transfer instruction
       // TODO: Add instruction to transfer NFT to staking program
 
-      // Confirm transaction
+      // Verify transaction safety
+      verifyTransactionSafety(transaction);
+
+      // Check fees
+      await verifyTransactionFees(connection, transaction, wallet);
+
+      // Sign and send transaction
       const signature = await sendTransaction(transaction, connection);
       await connection.confirmTransaction(signature, 'confirmed');
       
       onStakeChange && onStakeChange();
     } catch (error) {
       console.error('Staking error:', error);
+      setError(error.message);
     } finally {
       setIsProcessing(false);
     }
@@ -95,6 +105,9 @@ const StakingInterface = ({ nft, onStakeChange }) => {
           {isProcessing ? 'Processing...' : 'Unstake NFT'}
         </button>
       </div>
+      {error && (
+        <div className="error-message">{error}</div>
+      )}
     </div>
   );
 };

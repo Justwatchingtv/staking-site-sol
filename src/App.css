@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 768px) {
+  .App-header {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .App-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .App-main {
+    padding: 1rem;
+  }
+
+  .wallet-connect {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Add smooth scrolling for mobile */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Improve touch targets on mobile */
+button, 
+input, 
+select {
+  min-height: 44px;
+}
+
+/* Prevent content from being hidden under fixed headers */
+main {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}

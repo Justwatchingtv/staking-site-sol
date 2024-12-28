@@ -1,22 +1,14 @@
 import { toast } from 'react-toastify';
 
-export const notify = ({ type, message, txid }) => {
-  const content = (
-    <div>
-      {message}
-      {txid && (
-        <a 
-          href={`https://explorer.solana.com/tx/${txid}?cluster=devnet`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View on Explorer
-        </a>
-      )}
-    </div>
-  );
+export const NotificationTypes = {
+  STAKE_SUCCESS: 'STAKE_SUCCESS',
+  UNSTAKE_SUCCESS: 'UNSTAKE_SUCCESS',
+  CLAIM_SUCCESS: 'CLAIM_SUCCESS',
+  ERROR: 'ERROR'
+};
 
-  toast[type](content, {
+export const showNotification = (type, message) => {
+  toast[type === 'ERROR' ? 'error' : 'success'](message, {
     position: "bottom-right",
     autoClose: 5000,
     hideProgressBar: false,

@@ -4,6 +4,54 @@ import { Metaplex } from '@metaplex-foundation/js';
 import NFTCard from './NFTCard';
 import './NFTGallery.css';
 
+const LoadingSkeleton = () => (
+  <div className="nft-loading-grid">
+    {[1, 2, 3, 4].map((i) => (
+      <div key={i} className="nft-skeleton">
+        <div className="skeleton-image" />
+        <div className="skeleton-text" />
+        <div className="skeleton-text short" />
+      </div>
+    ))}
+  </div>
+);
+
+const EmptyState = ({ type }) => {
+  const messages = {
+    noWallet: {
+      icon: '👛',
+      title: 'Connect Your Wallet',
+      description: 'Connect your wallet to view your NFTs',
+      action: 'Connect Wallet'
+    },
+    noNFTs: {
+      icon: '🖼️',
+      title: 'No NFTs Found',
+      description: 'You don\'t have any NFTs in your wallet yet',
+      action: 'Learn How to Get NFTs'
+    },
+    error: {
+      icon: '⚠️',
+      title: 'Something Went Wrong',
+      description: 'There was an error loading your NFTs',
+      action: 'Try Again'
+    }
+  };
+
+  const content = messages[type];
+
+  return (
+    <div className="empty-state">
+      <div className="empty-state-icon">{content.icon}</div>
+      <h3>{content.title}</h3>
+      <p className="empty-state-text">{content.description}</p>
+      <button className="empty-state-action">
+        {content.action}
+      </button>
+    </div>
+  );
+};
+
 const NFTGallery = () => {
   const { publicKey } = useWallet();
   const { connection } = useConnection();
@@ -37,64 +85,31 @@ const NFTGallery = () => {
   }, [publicKey, connection]);
 
   if (!publicKey) {
-    return (
-      <div className="nft-gallery-container">
-        <div className="nft-message">
-          <p>Please connect your wallet to view your NFTs</p>
-          <span className="nft-submessage">
-            Connect using the button in the top right
-          </span>
-        </div>
-      </div>
-    );
+    return <EmptyState type="noWallet" />;
   }
 
   if (loading) {
-    return (
-      <div className="nft-gallery-container">
-        <div className="nft-loading">
-          <div className="loading-spinner"></div>
-          <p>Loading your NFTs...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSkeleton />;
   }
 
   if (error) {
-    return (
-      <div className="nft-gallery-container">
-        <div className="nft-error">
-          <p>Error loading NFTs: {error}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="retry-button"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
+    return <EmptyState type="error" />;
+  }
+
+  if (!nfts.length) {
+    return <EmptyState type="noNFTs" />;
   }
 
   return (
     <div className="nft-gallery-container">
       <h2>Your NFTs</h2>
       <div className="nft-grid">
-        {nfts.length > 0 ? (
-          nfts.map((nft) => (
-            <NFTCard 
-              key={nft.address.toString()} 
-              nft={nft} 
-            />
-          ))
-        ) : (
-          <div className="no-nfts-message">
-            <p>No NFTs found in your wallet</p>
-            <span className="nft-submessage">
-              Transfer some NFTs to this wallet to get started
-            </span>
-          </div>
-        )}
+        {nfts.map((nft) => (
+          <NFTCard 
+            key={nft.address.toString()} 
+            nft={nft} 
+          />
+        ))}
       </div>
     </div>
   );
